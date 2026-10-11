@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NetBusiness.cz | Odhalte, co brzdí růst vašeho businessu</title>
+    <meta name="description" content="NetBusiness.cz — prémiové B2B poradenství pro české firmy. Pomáháme majitelům a ředitelům firem najít skrytý potenciál a nastavit konkrétní kroky ke změně." />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        base: '#0A0A0F',
+                        light: '#F5F0EB',
+                        accent: '#FF4D00',
+                        lime: '#C8F000',
+                        card: '#141420',
+                        muted: '#888880',
+                        textlight: '#E8E8E0',
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        :root {
+            --c-base: #0A0A0F;
+            --c-light: #F5F0EB;
+            --c-accent: #FF4D00;
+            --c-lime: #C8F000;
+            --c-card: #141420;
+            --c-muted: #888880;
+            --c-textlight: #E8E8E0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: #E8E8E0; background: var(--c-base); overflow-x: hidden; }
+
+        /* Scroll reveal */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(.22,1,.36,1), transform 0.8s cubic-bezier(.22,1,.36,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Step animation */
+        .step-reveal { opacity: 0; transform: translateX(60px); transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); }
+        .step-reveal.visible { opacity: 1; transform: translateX(0); }
+
+        /* Hero word animation */
+        .hero-word { opacity: 0; transform: translateY(30px); display: inline-block; }
+        .hero-word.animate { opacity: 1; transform: translateY(0); transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1); }
+
+        /* Counter animation */
+        .counter-num { font-variant-numeric: tabular-nums; }
+
+        /* Nav transition */
+        .nav-fixed { transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease; }
+        .nav-scrolled { background: rgba(10,10,15,0.85) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; box-shadow: 0 1px 0 rgba(255,77,0,0.15); }
+
+        /* Floating badge pulse */
+        @keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 0 rgba(200,240,0,0.5);} 50%{box-shadow:0 0 0 8px rgba(200,240,0,0);} }
+        .pulse-dot { animation: pulse-dot 2s infinite; }
+
+        /* Bounce arrow */
+        @keyframes bounce-down { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+        .bounce-arrow { animation: bounce-down 2s ease-in-out infinite; }
+
+        /* Rotating shape */
+        @keyframes slow-rotate { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+        .slow-spin { animation: slow-rotate 20s linear infinite; }
+
+        /* Service card glow */
+        .service-card { transition: transform 0.4s cubic-bezier(.22,1,.36,1), box-shadow 0.4s ease; }
+        .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(255,77,0,0.15); }
+
+        /* Differentiator card */
+        .diff-card { transition: transform 0.35s ease, box-shadow 0.35s ease; }
+        .diff-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+
+        /* Form focus */
+        .form-input { transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        .form-input:focus { border-color: var(--c-accent) !important; box-shadow: 0 0 0 3px rgba(255,77,0,0.15); outline: none; }
+
+        /* Active nav */
+        .nav-link { position: relative; }
+        .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--c-accent); transition:width 0.3s ease; }
+        .nav-link.active::after { width:100%; }
+
+        /* Diagonal overlay */
+        .hero-grid {
+            background-image: linear-gradient(135deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+                              linear-gradient(225deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+                              linear-gradient(45deg, rgba(255,255,255,0.015) 25%, transparent 25%);
+            background-size: 60px 60px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--c-base); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--c-accent); }
+
+        /* Highlighted card */
+        .card-highlighted { border: 1.5px solid var(--c-accent) !important; position: relative; }
+        .card-highlighted::before { content: 'Nejoblíbenější'; position: absolute; top: -12px; left: 24px; background: var(--c-accent); color: #fff; font-size: 11px; font-weight: 600; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+    
+        /* ===== MICRO-ANIMATIONS ===== */
+
+        /* Custom cursor */
+        body { cursor: none; }
+        #cursor-dot {
+            position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+            background: #fff; border-radius: 50%; pointer-events: none;
+            z-index: 99999; transform: translate(-50%,-50%);
+            transition: width .2s, height .2s, background .2s;
+            will-change: transform;
+        }
+        #cursor-ring {
+            position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+            border: 2px solid #FF4D00; border-radius: 50%; pointer-events: none;
+            z-index: 99998; transform: translate(-50%,-50%);
+            transition: width .3s cubic-bezier(.22,1,.36,1),
+                        height .3s cubic-bezier(.22,1,.36,1),
+                        background .3s, border-color .3s;
+            will-change: transform;
+        }
+        body.cursor-hover #cursor-ring {
+            width: 60px; height: 60px;
+            background: rgba(255,77,0,.15);
+        }
+        body.cursor-click #cursor-dot {
+            width: 16px; height: 16px;
+            background: #FF4D00;
+        }
+
+        /* Intro overlay */
+        #intro-overlay {
+            position: fixed; inset: 0; background: #0A0A0F;
+            z-index: 999999; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 16px;
+            transition: transform .55s cubic-bezier(.76,0,.24,1);
+        }
+        #intro-overlay.hide { transform: translateY(-100%); }
+        #intro-logo {
+            font-family: 'Syne', sans-serif; font-weight: 800;
+            font-size: clamp(28px, 5vw, 52px); color: #fff;
+            opacity: 0; transform: translateY(16px);
+            transition: opacity .5s ease, transform .5s ease;
+        }
+        #intro-logo span { color: #FF4D00; }
+        #intro-logo.show { opacity: 1; transform: translateY(0); }
+        #intro-line {
+            width: 0; height: 3px;
+            background: linear-gradient(90deg, #FF4D00, #C8F000);
+            border-radius: 2px;
+            transition: width .7s cubic-bezier(.22,1,.36,1) .3s;
+        }
+        #intro-line.show { width: 220px; }
+
+        /* Scroll progress bar */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, #FF4D00, #C8F000);
+            z-index: 99997; transition: width .05s linear;
+            pointer-events: none;
+        }
+
+        /* Hero blobs */
+        .hero-blob {
+            position: absolute; border-radius: 50%;
+            filter: blur(120px); pointer-events: none;
+        }
+        @keyframes blob-drift1 {
+            0%   { transform: translate(0px, 0px); }
+            100% { transform: translate(30px, -20px); }
+        }
+        @keyframes blob-drift2 {
+            0%   { transform: translate(0px, 0px); }
+            100% { transform: translate(-25px, 18px); }
+        }
+        @keyframes blob-drift3 {
+            0%   { transform: translate(0px, 0px); }
+            100% { transform: translate(20px, 25px); }
+        }
+
+        /* Marquee ticker */
+        #marquee-band {
+            background: #141420; height: 52px; overflow: hidden;
+            display: flex; align-items: center;
+            border-top: 1px solid rgba(255,255,255,.04);
+            border-bottom: 1px solid rgba(255,255,255,.04);
+        }
+        .marquee-track {
+            display: flex; white-space: nowrap; will-change: transform;
+            animation: marquee-scroll 40s linear infinite;
+        }
+        #marquee-band:hover .marquee-track { animation-play-state: paused; }
+        @keyframes marquee-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-item {
+            display: inline-flex; align-items: center; gap: 18px;
+            font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
+            color: #888880; padding: 0 8px; user-select: none;
+        }
+        .marquee-dot { color: #FF4D00; font-size: 16px; line-height: 1; }
+
+        /* 3D tilt glare */
+        .tilt-glare {
+            position: absolute; inset: 0; border-radius: inherit;
+            pointer-events: none; overflow: hidden;
+        }
+        .tilt-glare::after {
+            content: '';
+            position: absolute; top: -100%; left: -100%;
+            width: 300%; height: 300%;
+            background: radial-gradient(circle at var(--mx,50%) var(--my,50%),
+                rgba(255,255,255,.07) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .service-card { position: relative; overflow: hidden; }
+
+        /* Floating labels */
+        .float-field {
+            position: relative; margin-bottom: 0;
+        }
+        .float-field input,
+        .float-field textarea {
+            padding-top: 22px !important; padding-bottom: 8px !important;
+            border-radius: 12px !important;
+            border: 1.5px solid rgba(10,10,15,.12) !important;
+            background: #fff !important;
+            transition: border-color .3s, box-shadow .3s !important;
+        }
+        .float-field input:focus,
+        .float-field textarea:focus {
+            border-color: #FF4D00 !important;
+            box-shadow: 0 0 0 3px rgba(255,77,0,.12) !important;
+            outline: none !important;
+        }
+        .float-label {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            font-size: 13px; color: #888880; pointer-events: none;
+            transition: top .22s ease, transform .22s ease,
+                        font-size .22s ease, color .22s ease;
+            background: transparent;
+        }
+        .float-field textarea ~ .float-label { top: 20px; transform: none; }
+        .float-field input:focus ~ .float-label,
+        .float-field input:not(:placeholder-shown) ~ .float-label,
+        .float-field textarea:focus ~ .float-label,
+        .float-field textarea:not(:placeholder-shown) ~ .float-label {
+            top: 8px; transform: none; font-size: 10px;
+            color: #FF4D00; letter-spacing: .05em; text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Magnetic button */
+        .mag-btn { transition: transform .4s cubic-bezier(.25,.46,.45,.94); }
+
+        /* Footer watermark */
+        #footer-watermark {
+            position: absolute; right: -60px; top: 50%; transform: translateY(-50%);
+            font-family: 'Syne', sans-serif; font-weight: 800;
+            font-size: 300px; color: rgba(255,255,255,.025);
+            pointer-events: none; user-select: none; line-height: 1;
+            animation: slow-rotate 60s linear infinite;
+        }
+
+        /* Section dividers */
+        .section-divider {
+            height: 1px; width: 0%;
+            background: rgba(255,77,0,.18);
+            transition: width 1.3s ease;
+        }
+        .section-divider.visible { width: 100%; }
+
+        /* Counter glow finish */
+        @keyframes counter-pop {
+            0%   { transform: scale(1); }
+            40%  { transform: scale(1.08); text-shadow: 0 0 30px rgba(255,77,0,.6); }
+            100% { transform: scale(1); }
+        }
+        .counter-pop { animation: counter-pop .5s ease; }
+
+        /* Scramble char style */
+        .scramble-char { display: inline-block; }
+
+        /* Prefers reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-blob, .marquee-track, #footer-watermark,
+            .slow-spin, .bounce-arrow, .pulse-dot { animation: none !important; }
+            .reveal, .step-reveal { opacity: 1 !important; transform: none !important; }
+        }
+
+    </style>
+</head>
+<body data-id="0" class="font-inter">
+
+    <!-- Custom cursor -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+    <!-- Scroll progress -->
+    <div id="scroll-progress"></div>
+    <!-- Intro overlay -->
+    <div id="intro-overlay">
+        <div id="intro-logo">Net<span>.</span>Business</div>
+        <div id="intro-line"></div>
+    </div>
+
+    <app-icon data-id="1" hidden data-icon="trending-up" data-palette="Red"></app-icon>
+
+    <!-- FIXED NAVIGATION -->
+    <nav data-id="2" id="navbar-a7x2" class="nav-fixed fixed top-0 left-0 w-full z-50 bg-transparent">
+        <div data-id="3" class="max-w-7xl mx-auto flex items-center justify-between px-5 md:px-8 py-4 md:py-5">
+            <a data-id="4" href="#hero-section" id="logo-nav-k3m1" class="font-syne font-800 text-xl md:text-2xl text-white tracking-tight select-none">
+                Net<span data-id="5" class="text-accent">.</span>Business
+            </a>
+            <div data-id="6" class="hidden md:flex items-center gap-8">
+                <a data-id="7" href="#sluzby-section" class="nav-link text-sm text-textlight hover:text-white transition-colors" data-nav="sluzby-section">Služby</a>
+                <a data-id="8" href="#pristup-section" class="nav-link text-sm text-textlight hover:text-white transition-colors" data-nav="pristup-section">Přístup</a>
+                <a data-id="9" href="#vysledky-section" class="nav-link text-sm text-textlight hover:text-white transition-colors" data-nav="vysledky-section">Výsledky</a>
+                <a data-id="10" href="#kontakt-section" class="nav-link text-sm text-textlight hover:text-white transition-colors" data-nav="kontakt-section">Kontakt</a>
+                <a data-id="11" href="#kontakt-section" id="cta-nav-btn-d4k9" class="mag-btn bg-accent hover:bg-orange-600 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-all duration-300" class="bg-accent hover:bg-orange-600 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-all duration-300">Domluvit schůzku</a>
+            </div>
+            <button data-id="12" id="mobile-menu-btn-r8w3" class="md:hidden p-2 text-white" aria-label="Otevřít menu">
+                <i data-id="13" data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div data-id="14" id="mobile-menu-x9p2" class="hidden fixed inset-0 bg-base z-[60] flex flex-col">
+        <div data-id="15" class="flex items-center justify-between px-5 py-4">
+            <span data-id="16" class="font-syne font-800 text-xl text-white">Net<span data-id="17" class="text-accent">.</span>Business</span>
+            <button data-id="18" id="mobile-menu-close-f2k8" class="p-2 text-white" aria-label="Zavřít menu">
+                <i data-id="19" data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div data-id="20" class="flex flex-col items-center justify-center flex-1 gap-8">
+            <a data-id="21" href="#sluzby-section" class="mobile-nav-link text-2xl font-syne font-700 text-white hover:text-accent transition-colors">Služby</a>
+            <a data-id="22" href="#pristup-section" class="mobile-nav-link text-2xl font-syne font-700 text-white hover:text-accent transition-colors">Přístup</a>
+            <a data-id="23" href="#vysledky-section" class="mobile-nav-link text-2xl font-syne font-700 text-white hover:text-accent transition-colors">Výsledky</a>
+            <a data-id="24" href="#kontakt-section" class="mobile-nav-link text-2xl font-syne font-700 text-white hover:text-accent transition-colors">Kontakt</a>
+            <a data-id="25" href="#kontakt-section" class="mobile-nav-link bg-accent text-white text-lg font-semibold px-8 py-3 rounded-full mt-4">Domluvit schůzku</a>
+        </div>
+    </div>
+
+    <main data-id="26">
+        <!-- HERO SECTION -->
+        <section data-id="27" id="hero-section" class="relative min-h-screen flex flex-col justify-center bg-base overflow-hidden hero-grid">
+
+            <!-- Animated gradient blobs -->
+            <div class="hero-blob" style="width:600px;height:600px;background:rgba(255,77,0,.13);top:-100px;left:-180px;animation:blob-drift1 8s ease-in-out infinite alternate;" aria-hidden="true"></div>
+            <div class="hero-blob" style="width:450px;height:450px;background:rgba(200,240,0,.09);bottom:-80px;right:5%;animation:blob-drift2 12s ease-in-out infinite alternate;" aria-hidden="true"></div>
+            <div class="hero-blob" style="width:350px;height:350px;background:rgba(255,77,0,.07);top:30%;right:20%;animation:blob-drift3 10s ease-in-out 2s infinite alternate;" aria-hidden="true"></div>
+
+            <!-- Decorative geometric shape -->
+            <div data-id="28" class="absolute -top-20 -right-20 md:-top-32 md:-right-32 w-[300px] h-[300px] md:w-[500px] md:h-[500px] slow-spin opacity-20 pointer-events-none" aria-hidden="true">
+                <svg data-id="29" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon data-id="30" points="250,30 470,170 400,430 100,430 30,170" stroke="#C8F000" stroke-width="2" fill="none"/>
+                    <polygon data-id="31" points="250,80 420,190 370,400 130,400 80,190" stroke="#C8F000" stroke-width="1" fill="none" opacity="0.5"/>
+                    <circle data-id="32" cx="250" cy="250" r="120" stroke="#C8F000" stroke-width="1" fill="none" opacity="0.3"/>
+                </svg>
+            </div>
+            <!-- Diagonal accent lines -->
+            <div data-id="33" class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/20 to-transparent" aria-hidden="true"></div>
+
+            <div data-id="34" class="relative max-w-7xl mx-auto px-5 md:px-8 pt-32 md:pt-40 pb-20">
+                <!-- Floating badge -->
+                <div data-id="35" class="inline-flex items-center gap-2 bg-card border border-white/10 rounded-full px-4 py-1.5 mb-8 md:mb-10">
+                    <span data-id="36" class="w-2 h-2 bg-lime rounded-full pulse-dot"></span>
+                    <span data-id="37" class="text-xs font-medium tracking-widest uppercase text-textlight">B2B Konzultace</span>
+                </div>
+
+                <h1 data-id="38" id="hero-heading-m4k7" class="font-syne font-800 leading-[0.95] tracking-tight" style="font-size: clamp(48px, 8vw, 130px);">
+                    <span data-id="39" class="hero-word text-white">Odhalte,</span><br data-id="40" />
+                    <span data-id="41" class="hero-word text-white">co brzdí růst</span><br data-id="42" />
+                    <span data-id="43" class="hero-word text-accent">vašeho businessu.</span>
+                </h1>
+
+                <p data-id="44" id="hero-sub-w3n6" class="mt-6 md:mt-8 text-muted text-base md:text-lg leading-relaxed max-w-xl hero-word">
+                    Pomáháme majitelům a ředitelům firem najít přesně ta místa, kde přicházejí o růst — a nastavit konkrétní kroky ke změně.
+                </p>
+
+                <div data-id="45" class="flex flex-wrap gap-4 mt-8 md:mt-10">
+                    <a data-id="46" href="#problem-section" id="cta-hero1-q5r2" class="mag-btn hero-word inline-flex items-center gap-2 bg-accent hover:bg-orange-600 text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 text-sm md:text-base" class="hero-word inline-flex items-center gap-2 bg-accent hover:bg-orange-600 text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 text-sm md:text-base">
+                        Zjistit více
+                        <i data-id="47" data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                    <a data-id="48" href="#sluzby-section" id="cta-hero2-h9m1" class="hero-word inline-flex items-center gap-2 border border-white/30 hover:border-white text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 text-sm md:text-base">
+                        Naše služby
+                    </a>
+                </div>
+            </div>
+
+            <!-- Scroll indicator -->
+            <div data-id="49" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 bounce-arrow">
+                <span data-id="50" class="text-xs text-muted tracking-widest uppercase">Scroll</span>
+                <i data-id="51" data-lucide="chevron-down" class="w-5 h-5 text-muted"></i>
+            </div>
+        </section>
+
+    <!-- MARQUEE TICKER -->
+    <div id="marquee-band" aria-hidden="true">
+        <div class="marquee-track"><span class="marquee-item">Diagnostika businessu<span class="marquee-dot">·</span></span><span class="marquee-item">Obchodní strategie<span class="marquee-dot">·</span></span><span class="marquee-item">Lead Generation<span class="marquee-dot">·</span></span><span class="marquee-item">B2B Marketing<span class="marquee-dot">·</span></span><span class="marquee-item">Implementace<span class="marquee-dot">·</span></span><span class="marquee-item">Měřitelné výsledky<span class="marquee-dot">·</span></span><span class="marquee-item">Firemní růst<span class="marquee-dot">·</span></span><span class="marquee-item">ROI optimalizace<span class="marquee-dot">·</span></span><span class="marquee-item">Obchodní poradenství<span class="marquee-dot">·</span></span><span class="marquee-item">Strategický růst<span class="marquee-dot">·</span></span><span class="marquee-item">Diagnostika businessu<span class="marquee-dot">·</span></span><span class="marquee-item">Obchodní strategie<span class="marquee-dot">·</span></span><span class="marquee-item">Lead Generation<span class="marquee-dot">·</span></span><span class="marquee-item">B2B Marketing<span class="marquee-dot">·</span></span><span class="marquee-item">Implementace<span class="marquee-dot">·</span></span><span class="marquee-item">Měřitelné výsledky<span class="marquee-dot">·</span></span><span class="marquee-item">Firemní růst<span class="marquee-dot">·</span></span><span class="marquee-item">ROI optimalizace<span class="marquee-dot">·</span></span><span class="marquee-item">Obchodní poradenství<span class="marquee-dot">·</span></span><span class="marquee-item">Strategický růst<span class="marquee-dot">·</span></span><span class="marquee-item">Diagnostika businessu<span class="marquee-dot">·</span></span><span class="marquee-item">Obchodní strategie<span class="marquee-dot">·</span></span><span class="marquee-item">Lead Generation<span class="marquee-dot">·</span></span><span class="marquee-item">B2B Marketing<span class="marquee-dot">·</span></span><span class="marquee-item">Implementace<span class="marquee-dot">·</span></span><span class="marquee-item">Měřitelné výsledky<span class="marquee-dot">·</span></span><span class="marquee-item">Firemní růst<span class="marquee-dot">·</span></span><span class="marquee-item">ROI optimalizace<span class="marquee-dot">·</span></span><span class="marquee-item">Obchodní poradenství<span class="marquee-dot">·</span></span><span class="marquee-item">Strategický růst<span class="marquee-dot">·</span></span><span class="marquee-item">Diagnostika businessu<span class="marquee-dot">·</span></span><span class="marquee-item">Obchodní strategie<span class="marquee-dot">·</span></span><span class="marquee-item">Lead Generation<span class="marquee-dot">·</span></span><span class="marquee-item">B2B Marketing<span class="marquee-dot">·</span></span><span class="marquee-item">Implementace<span class="marquee-dot">·</span></span><span class="marquee-item">Měřitelné výsledky<span class="marquee-dot">·</span></span><span class="marquee-item">Firemní růst<span class="marquee-dot">·</span></span><span class="marquee-item">ROI optimalizace<span class="marquee-dot">·</span></span><span class="marquee-item">Obchodní poradenství<span class="marquee-dot">·</span></span><span class="marquee-item">Strategický růst<span class="marquee-dot">·</span></span></div>
+    </div>
+
+
+        <!-- PROBLEM STATEMENT SECTION -->
+        <section data-id="52" id="problem-section" class="bg-light py-20 md:py-32">
+            <div data-id="53" class="max-w-7xl mx-auto px-5 md:px-8">
+                <div data-id="54" class="reveal">
+                    <p data-id="55" class="text-xs font-semibold tracking-[0.25em] uppercase text-accent mb-4">Proč řešit růst</p>
+                    <h2 data-id="56" id="problem-title-k8r3" class="font-syne font-800 text-3xl md:text-5xl lg:text-6xl text-base leading-tight">
+                        Proč firmy<br data-id="57"/>přestávají růst?
+                    </h2>
+                    <p data-id="58" class="mt-6 text-base md:text-lg text-base/70 max-w-2xl leading-relaxed">
+                        Většina firem má potenciál růst rychleji. Problém bývá skrytý — v procesech, obchodní strategii nebo v tom, jak firma prezentuje svou hodnotu zákazníkům.
+                    </p>
+                </div>
+
+                <div data-id="59" class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-14 md:mt-20">
+                    <div data-id="60" class="reveal text-center md:text-left">
+                        <span data-id="61" class="counter-num font-syne font-800 text-5xl md:text-7xl text-accent" data-target="67" data-suffix="%">0%</span>
+                        <p data-id="62" class="mt-3 text-base font-medium text-base">firem stagnuje bez jasného důvodu</p>
+                    </div>
+                    <div data-id="63" class="reveal text-center md:text-left" style="transition-delay:0.15s">
+                        <span data-id="64" class="counter-num font-syne font-800 text-5xl md:text-7xl text-accent" data-target="3" data-suffix="x">0x</span>
+                        <p data-id="65" class="mt-3 text-base font-medium text-base">rychlejší růst po identifikaci slabých míst</p>
+                    </div>
+                    <div data-id="66" class="reveal text-center md:text-left" style="transition-delay:0.3s">
+                        <span data-id="67" class="counter-num font-syne font-800 text-5xl md:text-7xl text-accent" data-target="92" data-suffix="%">0%</span>
+                        <p data-id="68" class="mt-3 text-base font-medium text-base">klientů doporučuje naše služby</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section data-id="69" id="sluzby-section" class="bg-base py-20 md:py-32">
+            <div data-id="70" class="max-w-7xl mx-auto px-5 md:px-8">
+                <div data-id="71" class="reveal">
+                    <p data-id="72" class="text-xs font-semibold tracking-[0.25em] uppercase text-accent mb-4">Služby</p>
+                    <h2 data-id="73" id="services-title-p2m9" class="font-syne font-800 text-3xl md:text-5xl lg:text-6xl text-white leading-tight">
+                        Co pro vás uděláme
+                    </h2>
+                </div>
+
+                <div data-id="74" class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-12 md:mt-16 relative">
+                    <!-- Connector arrows (desktop only) -->
+                    <div data-id="75" class="hidden md:flex absolute top-1/2 left-[33.33%] -translate-x-1/2 -translate-y-1/2 z-10">
+                        <i data-id="76" data-lucide="chevron-right" class="w-6 h-6 text-accent/40"></i>
+                    </div>
+                    <div data-id="77" class="hidden md:flex absolute top-1/2 left-[66.66%] -translate-x-1/2 -translate-y-1/2 z-10">
+                        <i data-id="78" data-lucide="chevron-right" class="w-6 h-6 text-accent/40"></i>
+                    </div>
+
+                    <!-- Card 1 -->
+                    <div data-id="79" class="reveal service-card bg-card border border-white/5 rounded-2xl p-7 md:p-8">
+                        <div data-id="80" class="w-12 h-12 rounded-xl bg-lime/10 flex items-center justify-center mb-6">
+                            <svg data-id="81" class="w-6 h-6 text-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle data-id="82" cx="11" cy="11" r="8"/><path data-id="83" d="m21 21-4.3-4.3"/></svg>
+                        </div>
+                        <h3 data-id="84" class="font-syne font-700 text-xl text-white mb-3">Diagnostika businessu</h3>
+                        <p data-id="85" class="text-muted text-sm leading-relaxed mb-5">Provedeme hloubkovou analýzu vašeho podnikání a identifikujeme konkrétní bariéry, které brzdí váš růst.</p>
+                        <div data-id="86" class="flex flex-wrap gap-2">
+                            <span data-id="87" class="text-xs bg-white/5 text-textlight px-3 py-1 rounded-full">Analýza</span>
+                            <span data-id="88" class="text-xs bg-white/5 text-textlight px-3 py-1 rounded-full">Audit</span>
+                            <span data-id="89" class="text-xs bg-white/5 text-textlight px-3 py-1 rounded-full">KPI</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 (highlighted) -->
+                    <div data-id="90" class="reveal service-card card-highlighted bg-card rounded-2xl p-7 md:p-8" style="transition-delay:0.15s">
+                        <div data-id="91" class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+                            <svg data-id="92" class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle data-id="93" cx="12" cy="12" r="10"/><circle data-id="94" cx="12" cy="12" r="6"/><circle data-id="95" cx="12" cy="12" r="2"/></svg>
+                        </div>
+                        <h3 data-id="96" class="font-syne font-700 text-xl text-white mb-3">Obchodní strategie</h3>
+                        <p data-id="97" class="text-muted text-sm leading-relaxed mb-5">Navrhneme konkrétní obchodní strategii přizpůsobenou vaší firmě, trhu a cílové skupině zákazníků.</p>
+                        <div data-id="98" class="flex flex-wrap gap-2">
+                            <span data-id="99" class="text-xs bg-accent/10 text-accent px-3 py-1 rounded-full">Strategie</span>
+                            <span data-id="100" class="text-xs bg-accent/10 text-accent px-3 py-1 rounded-full">B2B</span>
+                            <span data-id="101" class="text-xs bg-accent/10 text-accent px-3 py-1 rounded-full">Výkon</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div data-id="102" class="reveal service-card bg-card border border-white/5 rounded-2xl p-7 md:p-8" style="transition-delay:0.3s">
+                        <div data-id="103" class="w-12 h-12 rounded-xl bg-lime/10 flex items-center justify-center mb-6">
+                            <svg data-id="104" class="w-6 h-6 text-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path data-id="105" d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path data-id="106" d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path data-id="107" d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path data-id="108" d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                        </div>
+                        <h3 data-id="109" class="font-syne font-700 text-xl text-white mb-3">Implementace a výsledky</h3>
+                        <p data-id="110" class="text-muted text-sm leading-relaxed mb-5">Pomůžeme vám zavést doporučená opatření do praxe a pravidelně měříme dosažené výsledky.</p>
+                        <div data-id="111" class="flex flex-wrap gap-2">
+                            <span data-id="112" class="text-xs bg-white/5 text-textlight px-3 py-1 rounded-full">Implementace</span>
+                            <span data-id="113" class="text-xs bg-white/5 text-textlight px-3 py-1 rounded-full">Měření</span>
+                            <span data-id="114" class="text-xs bg-white/5 text-textlight px-3 py-1 rounded-full">ROI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR APPROACH SECTION -->
+        <section data-id="115" id="pristup-section" class="bg-light py-20 md:py-32">
+            <div data-id="116" class="max-w-7xl mx-auto px-5 md:px-8">
+                <div data-id="117" class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+                    <div data-id="118" class="reveal">
+                        <p data-id="119" class="text-xs font-semibold tracking-[0.25em] uppercase text-accent mb-4">Jak pracujeme</p>
+                        <h2 data-id="120" id="approach-title-n5k8" class="font-syne font-800 text-3xl md:text-5xl lg:text-6xl text-base leading-tight">
+                            Náš přístup
+                        </h2>
+                        <p data-id="121" class="mt-6 text-base md:text-lg text-base/70 max-w-md leading-relaxed">
+                            Nejsme klasická poradenská firma. Přinášíme zkušenosti z reálného podnikání — ne jen teorii.
+                        </p>
+                    </div>
+
+                    <div data-id="122" class="flex flex-col gap-8 md:gap-10">
+                        <div data-id="123" class="step-reveal flex gap-5 md:gap-6 border-l-2 border-accent pl-6 md:pl-8" style="transition-delay:0s">
+                            <span data-id="124" class="font-syne font-800 text-5xl md:text-7xl text-base/10 leading-none select-none shrink-0">01</span>
+                            <div data-id="125">
+                                <h3 data-id="126" class="font-syne font-700 text-lg md:text-xl text-base">Posloucháme</h3>
+                                <p data-id="127" class="mt-2 text-sm md:text-base text-muted leading-relaxed">Nejprve důkladně pochopíme vaše podnikání, tým a trh.</p>
+                            </div>
+                        </div>
+                        <div data-id="128" class="step-reveal flex gap-5 md:gap-6 border-l-2 border-accent pl-6 md:pl-8" style="transition-delay:0.15s">
+                            <span data-id="129" class="font-syne font-800 text-5xl md:text-7xl text-base/10 leading-none select-none shrink-0">02</span>
+                            <div data-id="130">
+                                <h3 data-id="131" class="font-syne font-700 text-lg md:text-xl text-base">Analyzujeme</h3>
+                                <p data-id="132" class="mt-2 text-sm md:text-base text-muted leading-relaxed">Identifikujeme skryté problémy a promarněné příležitosti.</p>
+                            </div>
+                        </div>
+                        <div data-id="133" class="step-reveal flex gap-5 md:gap-6 border-l-2 border-accent pl-6 md:pl-8" style="transition-delay:0.3s">
+                            <span data-id="134" class="font-syne font-800 text-5xl md:text-7xl text-base/10 leading-none select-none shrink-0">03</span>
+                            <div data-id="135">
+                                <h3 data-id="136" class="font-syne font-700 text-lg md:text-xl text-base">Navrhujeme</h3>
+                                <p data-id="137" class="mt-2 text-sm md:text-base text-muted leading-relaxed">Připravíme konkrétní plán opatření s měřitelnými cíli.</p>
+                            </div>
+                        </div>
+                        <div data-id="138" class="step-reveal flex gap-5 md:gap-6 border-l-2 border-accent pl-6 md:pl-8" style="transition-delay:0.45s">
+                            <span data-id="139" class="font-syne font-800 text-5xl md:text-7xl text-base/10 leading-none select-none shrink-0">04</span>
+                            <div data-id="140">
+                                <h3 data-id="141" class="font-syne font-700 text-lg md:text-xl text-base">Realizujeme</h3>
+                                <p data-id="142" class="mt-2 text-sm md:text-base text-muted leading-relaxed">Jsme u vás při zavádění změn a kontrolujeme výsledky.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIAL SECTION -->
+        <section data-id="143" id="vysledky-section" class="bg-base py-20 md:py-32 relative overflow-hidden">
+            <div data-id="144" class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-lime/20 to-transparent" aria-hidden="true"></div>
+            <div data-id="145" class="max-w-7xl mx-auto px-5 md:px-8">
+                <div data-id="146" class="reveal">
+                    <p data-id="147" class="text-xs font-semibold tracking-[0.25em] uppercase text-accent mb-10 md:mb-16">Co říkají klienti</p>
+                </div>
+                <div data-id="148" class="reveal relative max-w-4xl">
+                    <svg data-id="149" class="absolute -top-4 -left-4 md:-top-6 md:-left-8 w-16 h-16 md:w-24 md:h-24 text-lime opacity-30" viewBox="0 0 24 24" fill="currentColor"><path data-id="150" d="M11.3 2.1C6.1 3.4 2.5 7.2 2.5 12.5c0 3.6 2.2 6.5 5 6.5 2.5 0 4.5-2 4.5-4.5S9.5 10 7 10c-.3 0-.6 0-.9.1C6.6 6.8 8.7 4.6 11.8 3.5l-.5-1.4zm10 0C16.1 3.4 12.5 7.2 12.5 12.5c0 3.6 2.2 6.5 5 6.5 2.5 0 4.5-2 4.5-4.5S19.5 10 17 10c-.3 0-.6 0-.9.1.5-3.3 2.6-5.5 5.7-6.6l-.5-1.4z"/></svg>
+                    <blockquote data-id="151" class="font-syne font-700 text-2xl md:text-4xl lg:text-5xl text-white leading-snug pl-4 md:pl-12">
+                        Za 6 měsíců spolupráce jsme zvýšili obrat o 34 % a konečně víme, kde máme největší příležitosti k růstu.
+                    </blockquote>
+                    <div data-id="152" class="mt-8 pl-4 md:pl-12">
+                        <p data-id="153" class="text-accent font-semibold">— Jan Novák</p>
+                        <p data-id="154" class="text-muted text-sm mt-1">CEO, TechCorp s.r.o.</p>
+                    </div>
+                </div>
+
+                <div data-id="155" class="reveal grid grid-cols-3 gap-4 md:gap-6 mt-16 md:mt-20 max-w-2xl">
+                    <div data-id="156" class="bg-card border border-white/5 rounded-xl px-6 py-5 flex items-center justify-center">
+                        <span data-id="157" class="font-syne font-700 text-sm md:text-base text-white/40 tracking-wider">InnoTech</span>
+                    </div>
+                    <div data-id="158" class="bg-card border border-white/5 rounded-xl px-6 py-5 flex items-center justify-center">
+                        <span data-id="159" class="font-syne font-700 text-sm md:text-base text-white/40 tracking-wider">DataPro</span>
+                    </div>
+                    <div data-id="160" class="bg-card border border-white/5 rounded-xl px-6 py-5 flex items-center justify-center">
+                        <span data-id="161" class="font-syne font-700 text-sm md:text-base text-white/40 tracking-wider">GreenSoft</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY US SECTION -->
+        <section data-id="162" id="whyus-section" class="bg-light py-20 md:py-32">
+            <div data-id="163" class="max-w-7xl mx-auto px-5 md:px-8">
+                <div data-id="164" class="reveal">
+                    <p data-id="165" class="text-xs font-semibold tracking-[0.25em] uppercase text-accent mb-4">Proč právě my</p>
+                    <h2 data-id="166" id="whyus-title-g2h7" class="font-syne font-800 text-3xl md:text-5xl text-base leading-tight mb-12 md:mb-16">
+                        V čem se lišíme
+                    </h2>
+                </div>
+
+                <div data-id="167" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                    <div data-id="168" class="reveal diff-card bg-white rounded-2xl p-7 md:p-8">
+                        <div data-id="169" class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
+                            <svg data-id="170" class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle data-id="171" cx="12" cy="12" r="10"/><circle data-id="172" cx="12" cy="12" r="6"/><circle data-id="173" cx="12" cy="12" r="2"/></svg>
+                        </div>
+                        <h3 data-id="174" class="font-syne font-700 text-lg text-base mb-2">Praktické zkušenosti</h3>
+                        <p data-id="175" class="text-muted text-sm leading-relaxed">Naši konzultanti mají za sebou roky v reálném businessu, ne jen akademické znalosti.</p>
+                    </div>
+
+                    <div data-id="176" class="reveal diff-card bg-white rounded-2xl p-7 md:p-8" style="transition-delay:0.1s">
+                        <div data-id="177" class="w-12 h-12 rounded-xl bg-lime/15 flex items-center justify-center mb-5">
+                            <svg data-id="178" class="w-6 h-6 text-lime" style="filter:brightness(0.6)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path data-id="179" d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        </div>
+                        <h3 data-id="180" class="font-syne font-700 text-lg text-base mb-2">Rychlé výsledky</h3>
+                        <p data-id="181" class="text-muted text-sm leading-relaxed">První konkrétní doporučení dostanete již po úvodní diagnostice.</p>
+                    </div>
+
+                    <div data-id="182" class="reveal diff-card bg-white rounded-2xl p-7 md:p-8" style="transition-delay:0.2s">
+                        <div data-id="183" class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
+                            <svg data-id="184" class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path data-id="185" d="M3 3v18h18"/><path data-id="186" d="m19 9-5 5-4-4-3 3"/></svg>
+                        </div>
+                        <h3 data-id="187" class="font-syne font-700 text-lg text-base mb-2">Měřitelné výsledky</h3>
+                        <p data-id="188" class="text-muted text-sm leading-relaxed">Každé doporučení má jasné KPI a způsob měření úspěchu.</p>
+                    </div>
+
+                    <div data-id="189" class="reveal diff-card bg-white rounded-2xl p-7 md:p-8" style="transition-delay:0.3s">
+                        <div data-id="190" class="w-12 h-12 rounded-xl bg-lime/15 flex items-center justify-center mb-5">
+                            <svg data-id="191" class="w-6 h-6 text-lime" style="filter:brightness(0.6)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path data-id="192" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle data-id="193" cx="9" cy="7" r="4"/><path data-id="194" d="M22 21v-2a4 4 0 0 0-3-3.87"/><path data-id="195" d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <h3 data-id="196" class="font-syne font-700 text-lg text-base mb-2">Dlouhodobé partnerství</h3>
+                        <p data-id="197" class="text-muted text-sm leading-relaxed">Nejsme jednorázová konzultace — jsme váš obchodní partner.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT / CTA SECTION -->
+        <section data-id="198" id="kontakt-section" class="bg-base py-20 md:py-32 relative">
+            <div data-id="199" class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/20 to-transparent" aria-hidden="true"></div>
+            <div data-id="200" class="max-w-7xl mx-auto px-5 md:px-8">
+                <div data-id="201" class="reveal text-center mb-12 md:mb-16">
+                    <h2 data-id="202" class="font-syne font-800 text-3xl md:text-5xl lg:text-7xl text-white leading-tight">
+                        Připraveni odhalit
+                    </h2>
+                    <h2 data-id="203" class="font-syne font-800 text-3xl md:text-5xl lg:text-7xl text-accent leading-tight">
+                        skrytý potenciál?
+                    </h2>
+                    <p data-id="204" class="mt-6 text-muted text-base md:text-lg max-w-xl mx-auto">
+                        Začněte bezplatnou konzultací. Zjistíme, kde vaše firma přichází o příležitosti.
+                    </p>
+                </div>
+
+                <div data-id="205" class="reveal grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-12 max-w-5xl mx-auto">
+                    <!-- Form -->
+                    <div data-id="206" class="lg:col-span-3 bg-light rounded-2xl p-6 md:p-8 shadow-2xl" id="form-card-b7k2">
+                        <form data-id="207" id="contact-form-r4t9" class="flex flex-col gap-4">
+                            <div data-id="208">
+                                <label data-id="209" class="block text-xs font-semibold text-base/60 uppercase tracking-wider mb-1.5" for="name-input">Vaše jméno</label>
+                                <input data-id="210" type="text" id="name-input" class="form-input w-full bg-white border border-base/10 rounded-xl px-4 py-3 text-sm text-base placeholder-muted" placeholder="Jan Novák" required />
+                            </div>
+                            <div data-id="211">
+                                <label data-id="212" class="block text-xs font-semibold text-base/60 uppercase tracking-wider mb-1.5" for="company-input">Název firmy</label>
+                                <input data-id="213" type="text" id="company-input" class="form-input w-full bg-white border border-base/10 rounded-xl px-4 py-3 text-sm text-base placeholder-muted" placeholder="Vaše firma s.r.o." required />
+                            </div>
+                            <div data-id="214">
+                                <label data-id="215" class="block text-xs font-semibold text-base/60 uppercase tracking-wider mb-1.5" for="email-input">E-mail</label>
+                                <input data-id="216" type="email" id="email-input" class="form-input w-full bg-white border border-base/10 rounded-xl px-4 py-3 text-sm text-base placeholder-muted" placeholder="jan@firma.cz" required />
+                            </div>
+                            <div data-id="217">
+                                <label data-id="218" class="block text-xs font-semibold text-base/60 uppercase tracking-wider mb-1.5" for="phone-input">Telefon <span data-id="219" class="text-muted font-normal">(nepovinné)</span></label>
+                                <input data-id="220" type="tel" id="phone-input" class="form-input w-full bg-white border border-base/10 rounded-xl px-4 py-3 text-sm text-base placeholder-muted" placeholder="+420 000 000 000" />
+                            </div>
+                            <div data-id="221">
+                                <label data-id="222" class="block text-xs font-semibold text-base/60 uppercase tracking-wider mb-1.5" for="message-input">Popište váš největší obchodní problém</label>
+                                <textarea data-id="223" id="message-input" rows="4" class="form-input w-full bg-white border border-base/10 rounded-xl px-4 py-3 text-sm text-base placeholder-muted resize-none" placeholder="Popište krátce, co ve firmě řešíte..." required></textarea>
+                            </div>
+                            <button data-id="224" type="submit" id="submit-btn-c8n3" class="mag-btn w-full bg-gradient-to-r from-accent to-orange-600 hover:from-orange-600 hover:to-accent text-white font-semibold py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm md:text-base mt-2" class="w-full bg-gradient-to-r from-accent to-orange-600 hover:from-orange-600 hover:to-accent text-white font-semibold py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm md:text-base mt-2">
+                                Odeslat poptávku
+                                <i data-id="225" data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                            <p data-id="226" class="text-xs text-muted text-center mt-1">Odpovídáme do 24 hodin. Bez závazků.</p>
+                        </form>
+                        <!-- Success message -->
+                        <div data-id="227" id="form-success-m5k2" class="hidden flex-col items-center justify-center text-center py-12">
+                            <div data-id="228" class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-5">
+                                <i data-id="229" data-lucide="check" class="w-8 h-8 text-green-600"></i>
+                            </div>
+                            <h3 data-id="230" class="font-syne font-700 text-xl text-base mb-2">Děkujeme!</h3>
+                            <p data-id="231" class="text-muted text-sm">Ozveme se vám do 24 hodin.</p>
+                        </div>
+                    </div>
+
+                    <!-- Contact info -->
+                    <div data-id="232" class="lg:col-span-2 flex flex-col justify-center gap-8">
+                        <div data-id="233" class="flex items-start gap-4">
+                            <div data-id="234" class="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                                <i data-id="235" data-lucide="mail" class="w-5 h-5 text-accent"></i>
+                            </div>
+                            <div data-id="236">
+                                <p data-id="237" class="text-xs text-muted uppercase tracking-wider mb-1">E-mail</p>
+                                <p data-id="238" class="text-white font-medium text-sm">info@netbusiness.cz</p>
+                            </div>
+                        </div>
+                        <div data-id="239" class="flex items-start gap-4">
+                            <div data-id="240" class="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                                <i data-id="241" data-lucide="phone" class="w-5 h-5 text-accent"></i>
+                            </div>
+                            <div data-id="242">
+                                <p data-id="243" class="text-xs text-muted uppercase tracking-wider mb-1">Telefon</p>
+                                <p data-id="244" class="text-white font-medium text-sm">+420 000 000 000</p>
+                            </div>
+                        </div>
+                        <div data-id="245" class="flex items-start gap-4">
+                            <div data-id="246" class="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                                <i data-id="247" data-lucide="map-pin" class="w-5 h-5 text-accent"></i>
+                            </div>
+                            <div data-id="248">
+                                <p data-id="249" class="text-xs text-muted uppercase tracking-wider mb-1">Adresa</p>
+                                <p data-id="250" class="text-white font-medium text-sm">Praha, Česká republika</p>
+                            </div>
+                        </div>
+                        <div data-id="251" class="mt-4 pt-6 border-t border-white/10">
+                            <p data-id="252" class="text-muted text-xs uppercase tracking-wider mb-3">Sledujte nás</p>
+                            <a data-id="253" href="#" class="inline-flex items-center gap-2 text-white hover:text-accent transition-colors text-sm">
+                                <i data-id="254" data-lucide="linkedin" class="w-5 h-5"></i>
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer data-id="255" style="position:relative;overflow:hidden;" class="bg-base border-t border-accent/20 py-8 md:py-10">
+        <div id="footer-watermark" aria-hidden="true">N</div>
+        <div data-id="256" class="max-w-7xl mx-auto px-5 md:px-8">
+            <div data-id="257" class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div data-id="258" class="text-center md:text-left">
+                    <span data-id="259" class="font-syne font-800 text-lg text-white">Net<span data-id="260" class="text-accent">.</span>Business</span>
+                    <p data-id="261" class="text-muted text-xs mt-1">Odhalujeme skrytý potenciál firem.</p>
+                </div>
+                <div data-id="262" class="flex flex-wrap items-center justify-center gap-6 text-sm text-muted">
+                    <a data-id="263" href="#sluzby-section" class="hover:text-white transition-colors">Služby</a>
+                    <a data-id="264" href="#pristup-section" class="hover:text-white transition-colors">Přístup</a>
+                    <a data-id="265" href="#vysledky-section" class="hover:text-white transition-colors">Výsledky</a>
+                    <a data-id="266" href="#kontakt-section" class="hover:text-white transition-colors">Kontakt</a>
+                </div>
+                <div data-id="267" class="flex items-center gap-4 text-muted text-xs">
+                    <a data-id="268" href="#" class="hover:text-accent transition-colors"><i data-id="269" data-lucide="linkedin" class="w-4 h-4"></i></a>
+                    <span data-id="270">© 2026 NetBusiness.cz</span>
+                </div>
+            </div>
+            <p data-id="271" class="text-center text-muted/50 text-xs mt-6">Made by Copilot</p>
+        </div>
+    </footer>
+
+    <script>
+        // === Lucide Icons (progressive enhancement) ===
+        if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
+            lucide.createIcons();
+        }
+
+        // === Mobile Menu ===
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn-r8w3');
+        const mobileMenu = document.getElementById('mobile-menu-x9p2');
+        const mobileMenuClose = document.getElementById('mobile-menu-close-f2k8');
+
+        if (mobileMenuBtn && mobileMenu && mobileMenuClose) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            });
+
+            mobileMenuClose.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                document.body.style.overflow = '';
+            });
+
+            document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('flex');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
+        // === Navbar scroll effect ===
+        const navbar = document.getElementById('navbar-a7x2');
+        let lastScrollY = 0;
+
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            if (scrollY > 60) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+            lastScrollY = scrollY;
+        });
+
+        // === Scrollspy — active nav highlight ===
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link[data-nav]');
+
+        function updateActiveNav() {
+            let current = '';
+            sections.forEach(function(section) {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(function(link) {
+                link.classList.remove('active');
+                if (link.dataset.nav === current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', updateActiveNav);
+
+        // === Scroll reveal animations ===
+        const revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal, .step-reveal').forEach(function(el) {
+            revealObserver.observe(el);
+        });
+
+        // Hero & counter animations handled by micro-animations block
+
+        // === Contact form submission ===
+        const contactForm = document.getElementById('contact-form-r4t9');
+        const formSuccess = document.getElementById('form-success-m5k2');
+
+        if (contactForm && formSuccess) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                contactForm.style.display = 'none';
+                formSuccess.classList.remove('hidden');
+                formSuccess.classList.add('flex');
+                // Re-render icons in success message
+                if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
+                    lucide.createIcons();
+                }
+            });
+        }
+    </script>
+
+    <script>
+    (function() {
+        const isTouch = 'ontouchstart' in window;
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* ── INTRO ANIMATION ── */
+        if (!reducedMotion) {
+            document.body.style.overflow = 'hidden';
+            const overlay = document.getElementById('intro-overlay');
+            const logo    = document.getElementById('intro-logo');
+            const line    = document.getElementById('intro-line');
+            requestAnimationFrame(function() {
+                logo.classList.add('show');
+                setTimeout(function() { line.classList.add('show'); }, 200);
+                setTimeout(function() {
+                    overlay.classList.add('hide');
+                    document.body.style.overflow = '';
+                    overlay.addEventListener('transitionend', function() {
+                        overlay.style.display = 'none';
+                        startHeroAnimations();
+                    }, { once: true });
+                }, 1300);
+            });
+        } else {
+            document.getElementById('intro-overlay').style.display = 'none';
+            startHeroAnimations();
+        }
+
+        /* ── HERO SCRAMBLE + WORD ANIMATION ── */
+        function startHeroAnimations() {
+            if (reducedMotion) return;
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%';
+            const heroWords = document.querySelectorAll('.hero-word');
+            heroWords.forEach(function(el, i) {
+                setTimeout(function() { scrambleElement(el); }, i * 160);
+            });
+        }
+
+        function scrambleElement(el) {
+            const original = el.textContent.trim();
+            const length   = original.length;
+            let frame = 0;
+            const totalFrames = 18;
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+
+            function tick() {
+                if (frame >= totalFrames) { el.textContent = original; return; }
+                const ratio = frame / totalFrames;
+                let out = '';
+                for (let c = 0; c < length; c++) {
+                    if (original[c] === ' ') { out += ' '; continue; }
+                    if (c / length < ratio) {
+                        out += original[c];
+                    } else {
+                        out += frame % 2 === 0
+                            ? String.fromCharCode(65 + Math.floor(Math.random() * 26))
+                            : (Math.floor(Math.random() * 10)).toString();
+                    }
+                }
+                el.textContent = out;
+                frame++;
+                requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        /* ── CUSTOM CURSOR ── */
+        if (!isTouch && !reducedMotion) {
+            const dot  = document.getElementById('cursor-dot');
+            const ring = document.getElementById('cursor-ring');
+            let mx = 0, my = 0, rx = 0, ry = 0;
+
+            document.addEventListener('mousemove', function(e) {
+                mx = e.clientX; my = e.clientY;
+                dot.style.transform = 'translate(' + (mx - 4) + 'px,' + (my - 4) + 'px)';
+            });
+
+            (function lerpRing() {
+                rx += (mx - rx) * 0.12;
+                ry += (my - ry) * 0.12;
+                ring.style.transform = 'translate(' + (rx - 20) + 'px,' + (ry - 20) + 'px)';
+                requestAnimationFrame(lerpRing);
+            })();
+
+            document.querySelectorAll('a, button, .service-card, .diff-card')
+                .forEach(function(el) {
+                    el.addEventListener('mouseenter', function() { document.body.classList.add('cursor-hover'); });
+                    el.addEventListener('mouseleave', function() { document.body.classList.remove('cursor-hover'); });
+                });
+            document.addEventListener('mousedown', function() { document.body.classList.add('cursor-click'); });
+            document.addEventListener('mouseup',   function() { document.body.classList.remove('cursor-click'); });
+        }
+
+        /* ── SCROLL PROGRESS BAR ── */
+        var progressBar = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', function() {
+            var total   = document.documentElement.scrollHeight - window.innerHeight;
+            var current = window.scrollY;
+            progressBar.style.width = (total > 0 ? (current / total * 100) : 0) + '%';
+        }, { passive: true });
+
+        /* ── MAGNETIC BUTTONS ── */
+        if (!isTouch && !reducedMotion) {
+            document.querySelectorAll('.mag-btn').forEach(function(btn) {
+                btn.addEventListener('mousemove', function(e) {
+                    var rect = btn.getBoundingClientRect();
+                    var cx   = rect.left + rect.width  / 2;
+                    var cy   = rect.top  + rect.height / 2;
+                    var dx   = (e.clientX - cx) * 0.35;
+                    var dy   = (e.clientY - cy) * 0.35;
+                    btn.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+                });
+                btn.addEventListener('mouseleave', function() {
+                    btn.style.transform = '';
+                });
+            });
+        }
+
+        /* ── 3D TILT ON SERVICE CARDS ── */
+        if (!isTouch && !reducedMotion) {
+            document.querySelectorAll('.service-card').forEach(function(card) {
+                card.addEventListener('mousemove', function(e) {
+                    var rect = card.getBoundingClientRect();
+                    var px   = (e.clientX - rect.left) / rect.width  - 0.5;
+                    var py   = (e.clientY - rect.top)  / rect.height - 0.5;
+                    var rotX = -py * 10;
+                    var rotY =  px * 10;
+                    card.style.transform = 'perspective(800px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) translateY(-6px)';
+                    card.style.boxShadow = '0 24px 60px rgba(255,77,0,.18)';
+                    card.style.setProperty('--mx', (px + 0.5) * 100 + '%');
+                    card.style.setProperty('--my', (py + 0.5) * 100 + '%');
+                });
+                card.addEventListener('mouseleave', function() {
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                });
+            });
+        }
+
+        /* ── SECTION DIVIDERS ── */
+        document.querySelectorAll('.section-divider').forEach(function(el) {
+            new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.5 }).observe(el);
+        });
+
+        /* ── COUNTER POP on finish ── */
+        var counterObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (!entry.isIntersecting) return;
+                var el     = entry.target;
+                var target = parseInt(el.dataset.target, 10);
+                var suffix = el.dataset.suffix || '';
+                var dur    = 1800;
+                var t0     = performance.now();
+                function ease(t) { return 1 - Math.pow(1 - t, 4); }
+                function tick(now) {
+                    var p = Math.min((now - t0) / dur, 1);
+                    el.textContent = Math.round(ease(p) * target) + suffix;
+                    if (p < 1) { requestAnimationFrame(tick); }
+                    else {
+                        el.textContent = target + suffix;
+                        el.classList.add('counter-pop');
+                        el.style.textShadow = '0 0 30px rgba(255,77,0,.5)';
+                        setTimeout(function() { el.style.textShadow = ''; }, 600);
+                    }
+                }
+                requestAnimationFrame(tick);
+                counterObs.unobserve(el);
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.counter-num[data-target]').forEach(function(el) {
+            counterObs.observe(el);
+        });
+
+    })();
+    </script>
+
+</body>
+</html>
